@@ -27,12 +27,22 @@ const FeedbackButtons = ({badclick, neutralclick, goodclick}) => {
   )
 }
 
-const FeedbackDisplay = ({good, neutral, bad}) => {
+const Statistics = ({good, neutral, bad}) => {
   const avg = (good * 1 + bad * (-1))/(good + neutral + bad)
   const positive = (good)/(good + bad + neutral) * 100
 
+  if (good === 0 && neutral === 0 && bad === 0){
+    return (
+      <div>
+        <Header text='statistics' />
+        <p>No feedback given</p>
+      </div>
+    )
+  }
+
   return (
     <div>
+      <Header text='statistics' />
       <p>good {good} <br></br>
       neutral {neutral} <br></br>
       bad {bad} <br></br>
@@ -42,6 +52,8 @@ const FeedbackDisplay = ({good, neutral, bad}) => {
     </div>
   )
 }
+
+
 
 const App = () => {
   // tallenna napit omaan tilaansa
@@ -74,8 +86,7 @@ const App = () => {
       neutralclick={neutralClick} 
       goodclick={goodClick} 
       />
-      <Header text='statistics' />
-      <FeedbackDisplay good={good} neutral={neutral} bad={bad} />
+      <Statistics good={good} neutral={neutral} bad={bad} />
     </div>
   )
 }
