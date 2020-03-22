@@ -12,6 +12,7 @@ const Button = ({text, onclick}) => {
 const App = ({anecdotes}) => {
   const [selected, setSelected] = useState({
     index: 0,
+    max: 0,
     votes: Array.apply(null, new Array(anecdotes.length)).map(Number.prototype.valueOf,0)
   })
 
@@ -23,18 +24,30 @@ const App = ({anecdotes}) => {
   const newVote = () => {
     const copy = [...selected.votes]
     copy[selected.index] += 1
+
+    let max = 0
+    for(let i=0; i<copy.length; i++){
+      if(copy[i]>copy[max]){
+        max=i
+      }
+    }
+
     setSelected({
       ...selected,
+      max: max,
       votes: copy
     })
   }
 
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       {anecdotes[selected.index]} <br></br>
       has {selected.votes[selected.index]} votes <br></br>
       <Button text='vote' onclick={newVote} />
       <Button text='next anecdote' onclick={randomizeAnecdote} />
+      <h1>Anecdote with most votes</h1>
+      {anecdotes[selected.max]}
     </div>
   )
 }
