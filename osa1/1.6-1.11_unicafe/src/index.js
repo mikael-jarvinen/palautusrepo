@@ -28,9 +28,17 @@ const FeedbackButtons = ({badclick, neutralclick, goodclick}) => {
 }
 
 const FeedbackDisplay = ({good, neutral, bad}) => {
+  const avg = (good * 1 + bad * (-1))/(good + neutral + bad)
+  const positive = (good)/(good + bad + neutral) * 100
+
   return (
     <div>
-      <p>good {good} <br></br>neutral {neutral} <br></br>bad {bad}</p>
+      <p>good {good} <br></br>
+      neutral {neutral} <br></br>
+      bad {bad} <br></br>
+      average {avg} <br></br>
+      positive {positive} %
+      </p>
     </div>
   )
 }
