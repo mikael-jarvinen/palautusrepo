@@ -27,6 +27,14 @@ const FeedbackButtons = ({badclick, neutralclick, goodclick}) => {
   )
 }
 
+const StatisticLine = ({text, value}) => {
+  return (
+    <>
+      {text} {value}<br></br>
+    </>
+  )
+}
+
 const Statistics = ({good, neutral, bad}) => {
   const avg = (good * 1 + bad * (-1))/(good + neutral + bad)
   const positive = (good)/(good + bad + neutral) * 100
@@ -35,7 +43,7 @@ const Statistics = ({good, neutral, bad}) => {
     return (
       <div>
         <Header text='statistics' />
-        <p>No feedback given</p>
+        <p>No feedback given </p>
       </div>
     )
   }
@@ -43,11 +51,12 @@ const Statistics = ({good, neutral, bad}) => {
   return (
     <div>
       <Header text='statistics' />
-      <p>good {good} <br></br>
-      neutral {neutral} <br></br>
-      bad {bad} <br></br>
-      average {avg} <br></br>
-      positive {positive} %
+      <p>
+      <StatisticLine text='good' value={good} />
+      <StatisticLine text='neutral' value={neutral} />
+      <StatisticLine text='bad' value={bad} />
+      <StatisticLine text='average' value={avg} />
+      <StatisticLine text='positive' value={positive + '%'} />
       </p>
     </div>
   )
