@@ -3,7 +3,16 @@ import React from 'react'
 const Contacts = ({persons}) => {
     return (
         <>
-            {persons.map((x) => <p key={x.name}>{x.name} <br></br></p>)}
+            {persons.map((x) => {
+                if (x.filter === false) {
+                    return (
+                    <p key={x.name}>
+                        {x.name} {x.number}<br></br>
+                    </p>)
+                } else {
+                    return null
+                }
+            })}
         </>
     )
 }
