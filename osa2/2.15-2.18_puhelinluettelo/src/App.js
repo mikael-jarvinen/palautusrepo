@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react'
-import NewName from './components/NewName.js'
-import Contacts from './components/Contacts.js'
-import Search from './components/Search.js'
-import axios from 'axios'
+import NewName from './components/NewName'
+import Contacts from './components/Contacts'
+import Search from './components/Search'
+import noteService from './services/noteservices'
 
 const App = () => {
     const [persons, setPersons] = useState([])
@@ -11,10 +11,11 @@ const App = () => {
     const [filtered, setFiltered] = useState([])
 
     useEffect(() => {
-        axios.get('http://localhost:3001/persons')
+        noteService
+        .getAll()
         .then(result => {
-            setPersons(result.data)
-            setFiltered(persons.map(x => false))
+            setPersons(result)
+            setFiltered(result.map(x => false))
         })
     } ,[], persons)
 
@@ -49,9 +50,10 @@ const App = () => {
                 number: newNumber
             }
 
-            axios.post('http://localhost:3001/persons', newNode)
+            noteService
+            .create(newNode)
             .then(result => {
-                setPersons(persons.concat(result.data))
+                setPersons(persons.concat(result))
                 setFiltered(filtered.concat(false))
             }, result => {
                 console.log('failed posting new person')
