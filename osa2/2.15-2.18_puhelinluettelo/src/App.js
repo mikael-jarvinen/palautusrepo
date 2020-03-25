@@ -103,7 +103,7 @@ const App = () => {
     <div>
         <h2>Phonebook</h2>
         <Search onSearch={onSearch} />
-        <h2>add a new</h2>
+        <h2>add a new contact</h2>
         <NewName
         newName={newName}
         newNumber={newNumber}
