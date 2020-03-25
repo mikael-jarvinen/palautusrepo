@@ -63,7 +63,9 @@ const App = () => {
 
     const deletePerson = (event) => {
         event.preventDefault()
-        noteService
+
+        if(window.confirm(`You sure?`)) {
+            noteService
         .remove(event.target.id)
         .then(() => {
             noteService.getAll()
@@ -73,6 +75,8 @@ const App = () => {
             setFiltered(result.map(x => false))
         })
         })
+        }
+        
     }
 
     const handleNameChange = (event) => setNewName(event.target.value)
