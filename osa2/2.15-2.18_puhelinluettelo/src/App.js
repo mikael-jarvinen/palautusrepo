@@ -37,10 +37,27 @@ const App = () => {
         if (persons.reduce((cond, x) => {
             if (x.name === newName){
                 cond = true
+                if(window.confirm(`${newName} is already added to pronebook, 
+                replace the old number with a new one?`)){
+                    const newPerson = {
+                        name: newName,
+                        number: newNumber
+                    }
+                    noteService
+                    .update(x.id, newPerson)
+                    .then(() => {
+                        setNewName('')
+                        setNewNumber('')
+                        noteService
+                        .getAll()
+                        .then((result) => setPersons(result))
+                        setFiltered(persons.map(() => false))
+                    })
+                }
             }
             return cond
         }, false)){
-            window.alert(`${newName} is already added to phonebook`)
+            
         } else {
             setNewName('')
             setNewNumber('')
