@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Contacts = ({persons, filtered}) => {
+const Contacts = ({persons, filtered, deletePerson}) => {
     let filteredPersons = []
     for (let i=0; i<persons.length; i++){
         if(!filtered[i]){
@@ -12,9 +12,12 @@ const Contacts = ({persons, filtered}) => {
         <>
             {filteredPersons.map((x) => {
                 return (
-                <p key={x.name}>
-                    {x.name} {x.number}<br></br>
-                </p>
+                <form id={x.id} onSubmit={deletePerson} key={x.name}>
+                    <p>{x.name} {x.number} 
+                        <button type="submit">delete</button>
+                        <br></br>
+                    </p>
+                </form>
                 )
             })}
         </>

@@ -17,7 +17,7 @@ const App = () => {
             setPersons(result)
             setFiltered(result.map(x => false))
         })
-    } ,[], persons)
+    } ,[])
 
     const onSearch = (event) => {
         const search = event.target.value.toLowerCase()
@@ -61,6 +61,20 @@ const App = () => {
         }
     }
 
+    const deletePerson = (event) => {
+        event.preventDefault()
+        noteService
+        .remove(event.target.id)
+        .then(() => {
+            noteService.getAll()
+        .then(result => {
+            console.log(result)
+            setPersons(result)
+            setFiltered(result.map(x => false))
+        })
+        })
+    }
+
     const handleNameChange = (event) => setNewName(event.target.value)
     const handleNumberChange = (event) => setNewNumber(event.target.value)
 
@@ -77,7 +91,10 @@ const App = () => {
         handleSubmit={handleSubmit}
         />
         <h2>Numbers</h2>
-        <Contacts persons={persons} filtered={filtered}/>
+        <Contacts persons={persons}
+        filtered={filtered}
+        deletePerson={deletePerson}
+        />
     </div>
   )
 
