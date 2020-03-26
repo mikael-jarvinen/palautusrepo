@@ -53,14 +53,16 @@ const App = () => {
                     noteService
                     .update(x.id, newPerson)
                     .then(() => {
+                        showNotification('successfully changed number')
                         setNewName('')
                         setNewNumber('')
                         noteService
                         .getAll()
                         .then((result) => setPersons(result))
                         setFiltered(persons.map(() => false))
+                    }, () => {
+                        showNotification(`${x.name} has already been deleted`)
                     })
-                    showNotification('Updated old number to new number')
                 }
             }
             return cond
@@ -95,14 +97,14 @@ const App = () => {
         .remove(event.target.id)
         .then(() => {
             noteService.getAll()
-        .then(result => {
+            .then(result => {
             console.log(result)
             setPersons(result)
             setFiltered(result.map(x => false))
-        })
+            showNotification('succesfully deleted')
+        }, () => showNotification('error deleting'))
         })
         }
-        showNotification('successfully deleted')
         
     }
 
