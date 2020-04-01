@@ -83,8 +83,9 @@ const App = () => {
                 setPersons(persons.concat(result))
                 setFiltered(filtered.concat(false))
                 showNotification(`added ${newNode.name} to contacts`)
-            }, result => {
-                console.log('failed posting new person')
+            })
+            .catch(error => {
+                showNotification(error.response.data.error)
             })
         }
     }
