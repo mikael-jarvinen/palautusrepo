@@ -1,14 +1,13 @@
-export const changeNotification = message => {
-  return {
-    type: 'CHANGE',
-    message
-  }
-}
-
-export const clearNotification = () => {
-  return {
-    type: 'CHANGE',
-    message: 'Good day'
+export const changeNotification = (message, timeout) => {
+  return async dispatch => {
+    dispatch({
+      type: 'CHANGE',
+      message
+    })
+    setTimeout(() => dispatch({
+      type: 'CHANGE',
+      message: 'Good day'
+    }), timeout * 1000)
   }
 }
 

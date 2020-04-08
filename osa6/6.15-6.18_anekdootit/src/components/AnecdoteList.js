@@ -1,7 +1,7 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { vote } from '../reducers/anecdoteReducer'
-import { changeNotification, clearNotification } from '../reducers/notificationReducer'
+import { changeNotification } from '../reducers/notificationReducer'
 
 const compareAnecdotes = (first, second) => {
   if (first.votes > second.votes) {
@@ -22,8 +22,7 @@ const AnecdoteList = () => {
 
   const voteAnecdote = anecdote => {
     dispatch(vote(anecdote))
-    dispatch(changeNotification(`voted "${anecdote.content}"`))
-    setTimeout(() => dispatch(clearNotification()) , 5000)
+    dispatch(changeNotification(`voted "${anecdote.content}"`, 5))
   }
 
   return (
