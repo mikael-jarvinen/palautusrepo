@@ -14,8 +14,10 @@ const compareAnecdotes = (first, second) => {
 }
 
 const AnecdoteList = () => {
+  const filter = useSelector(state => state.filter)
   const unsortedAnecdotes = useSelector(state => state.anecdotes)
-  const anecdotes = unsortedAnecdotes.sort(compareAnecdotes)
+  const unFilteredAnecdotes = unsortedAnecdotes.sort(compareAnecdotes)
+  const anecdotes = unFilteredAnecdotes.filter(anecdote => anecdote.content.includes(filter))
   const dispatch = useDispatch()
 
   const voteAnecdote = id => {
