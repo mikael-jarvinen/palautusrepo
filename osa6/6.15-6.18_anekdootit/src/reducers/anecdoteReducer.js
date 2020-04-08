@@ -1,9 +1,15 @@
 import anecdoteService from '../services/anecdotes'
 
-export const vote = id => {
-  return {
-    type: 'VOTE',
-    data: id
+export const vote = anecdote => {
+  return async dispatch => {
+    await anecdoteService.update({
+      ...anecdote,
+      votes: anecdote.votes + 1
+    })
+    dispatch({
+      type: 'VOTE',
+      data: anecdote.id
+    })
   }
 }
 

@@ -20,10 +20,9 @@ const AnecdoteList = () => {
   const anecdotes = unFilteredAnecdotes.filter(anecdote => anecdote.content.includes(filter))
   const dispatch = useDispatch()
 
-  const voteAnecdote = id => {
-    dispatch(vote(id))
-    const anecdoteName = anecdotes.find(anecdote => anecdote.id === id).content
-    dispatch(changeNotification(`voted "${anecdoteName}"`))
+  const voteAnecdote = anecdote => {
+    dispatch(vote(anecdote))
+    dispatch(changeNotification(`voted "${anecdote.content}"`))
     setTimeout(() => dispatch(clearNotification()) , 5000)
   }
 
@@ -37,7 +36,7 @@ const AnecdoteList = () => {
           </div>
           <div>
             has {anecdote.votes}
-            <button onClick={() => voteAnecdote(anecdote.id)}>vote</button>
+            <button onClick={() => voteAnecdote(anecdote)}>vote</button>
           </div>
         </div>
       )}
