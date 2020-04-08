@@ -26,6 +26,13 @@ export const vote = id => {
   }
 }
 
+export const createAnecdote = anecdote => {
+  return {
+    type: 'CREATE',
+    data: anecdote
+  }
+}
+
 const reducer = (state = initialState, action) => {
   console.log('state now: ', state)
   console.log('action', action)
@@ -41,6 +48,13 @@ const reducer = (state = initialState, action) => {
       }
       const votedState = filteredState.concat(votedAnecdote)
       return votedState
+    case 'CREATE':
+      const newAnecdote = {
+        content: action.data,
+        id: getId(),
+        votes: 0
+      }
+      return state.concat(newAnecdote)
     default:
       return state
   }
