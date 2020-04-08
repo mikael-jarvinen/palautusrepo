@@ -13,7 +13,7 @@ const compareAnecdotes = (first, second) => {
 }
 
 const AnecdoteList = () => {
-  const unsortedAnecdotes = useSelector(state => state)
+  const unsortedAnecdotes = useSelector(state => state.anecdotes)
   const anecdotes = unsortedAnecdotes.sort(compareAnecdotes)
   const dispatch = useDispatch()
 
