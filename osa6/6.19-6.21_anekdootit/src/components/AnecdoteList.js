@@ -1,0 +1,46 @@
+import React from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { vote } from '../reducers/anecdoteReducer'
+import { changeNotification } from '../reducers/notificationReducer'
+
+const compareAnecdotes = (first, second) => {
+  if (first.votes > second.votes) {
+    return -1
+  } else if (first.votes < second.votes) {
+    return 1
+  } else {
+    return 0
+  }
+}
+
+const AnecdoteList = () => {
+  const filter = useSelector(state => state.filter)
+  const unsortedAnecdotes = useSelector(state => state.anecdotes)
+  const unFilteredAnecdotes = unsortedAnecdotes.sort(compareAnecdotes)
+  const anecdotes = unFilteredAnecdotes.filter(anecdote => anecdote.content.includes(filter))
+  const dispatch = useDispatch()
+
+  const voteAnecdote = anecdote => {
+    dispatch(vote(anecdote))
+    dispatch(changeNotification(`voted "${anecdote.content}"`, 5))
+  }
+
+  return (
+    <div>
+      <h2>Anecdotes</h2>
+      {anecdotes.map(anecdote =>
+        <div key={anecdote.id}>
+          <div>
+            {anecdote.content}
+          </div>
+          <div>
+            has {anecdote.votes}
+            <button onClick={() => voteAnecdote(anecdote)}>vote</button>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default AnecdoteList
