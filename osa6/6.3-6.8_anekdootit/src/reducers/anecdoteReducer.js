@@ -34,8 +34,6 @@ export const createAnecdote = anecdote => {
 }
 
 const reducer = (state = initialState, action) => {
-  console.log('state now: ', state)
-  console.log('action', action)
   const id = action.data
 
   switch (action.type){
