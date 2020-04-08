@@ -1,10 +1,13 @@
+let timeoutId = null
+
 export const changeNotification = (message, timeout) => {
   return async dispatch => {
     dispatch({
       type: 'CHANGE',
       message
     })
-    setTimeout(() => dispatch({
+    clearTimeout(timeoutId)
+    timeoutId = setTimeout(() => dispatch({
       type: 'CHANGE',
       message: 'Good day'
     }), timeout * 1000)
