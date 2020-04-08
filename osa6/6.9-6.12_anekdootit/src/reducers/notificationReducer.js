@@ -5,6 +5,13 @@ export const changeNotification = message => {
   }
 }
 
+export const clearNotification = () => {
+  return {
+    type: 'CHANGE',
+    message: 'Good day'
+  }
+}
+
 const reducer = (state = 'Good day', action) => {
   switch (action.type) {
     case 'CHANGE':
