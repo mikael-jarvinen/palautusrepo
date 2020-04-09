@@ -6,7 +6,7 @@ import {
   useHistory,
   useRouteMatch
 } from "react-router-dom"
-import { useField } from './hooks/index.js'
+import { useField, clear } from './hooks/index.js'
 
 const Menu = () => {
   const padding = {
@@ -71,16 +71,10 @@ const CreateNew = (props) => {
     })
   }
 
-  const zero = () => {
-    content.clear()
-    author.clear()
-    info.clear()
-  }
-
   return (
     <div>
       <h2>create a new anecdote</h2>
-      <form onSubmit={handleSubmit} onReset={zero}>
+      <form onSubmit={handleSubmit} onReset={clear}>
         <div>
           content
           <input {...content} />
