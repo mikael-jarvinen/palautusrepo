@@ -96,7 +96,7 @@ const typeDefs = gql`
     name: String!
     id: ID!
     born: Int
-    bookcount: Int!
+    bookCount: Int!
   }
 
   type Book {
@@ -114,6 +114,7 @@ const typeDefs = gql`
       author: String!
       genres: [String!]!
     ): Book
+    editAuthor(name: String!, setBornTo: Int!): Author
   }
 `
 
@@ -135,7 +136,7 @@ const resolvers = {
     allAuthors: () => authors
   },
   Author: {
-    bookcount: (root) => books.reduce((sum, book) => {
+    bookCount: (root) => books.reduce((sum, book) => {
       if (book.author === root.name) {
         return sum + 1
       } else {
@@ -144,6 +145,14 @@ const resolvers = {
     }, 0)
   },
   Mutation: {
+    editAuthor: (root, args) => {
+      if (!authors.find(author => author.name === args.name)) {
+        return null
+      }
+      const authorToEdit = authors.find(author => author.name === args.name)
+      authorToEdit.born = args.setBornTo
+      return authorToEdit
+    },
     addBook: (root, args) => {
       const newBook = {
         title: args.title,
