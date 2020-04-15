@@ -2,6 +2,7 @@
 import React from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_AUTHORS } from '../queries'
+import SetBirthyear from './SetBirthyear'
 
 const Authors = (props) => {
   const result = useQuery(ALL_AUTHORS, { pollInterval: 2000 })
@@ -42,7 +43,7 @@ const Authors = (props) => {
           )}
         </tbody>
       </table>
-
+      <SetBirthyear />
     </div>
   )
 }
