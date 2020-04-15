@@ -9,7 +9,11 @@ const Authors = (props) => {
   // eslint-disable-next-line react/prop-types
   if (!props.show) {
     return null
-  } else if (result.loading)  {
+  }
+  
+  
+  
+  if (result.loading)  {
     return <div>loading...</div>
   }
 
