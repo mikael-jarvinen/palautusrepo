@@ -5,7 +5,7 @@ const app = express();
 
 app.get('/hello', (_req, res) => {
   res.send('hello');
-})
+});
 
 app.get('/bmi', (req, res) => {
   const height = Number(req.query.height);
@@ -15,15 +15,15 @@ app.get('/bmi', (req, res) => {
       weight,
       height,
       bmi: calculateBmi(height, weight)
-    }
+    };
     res.json(bmiObject);
   } catch (e) {
-    res.json({ error: 'malformatted parameters' })
+    res.json({ error: 'malformatted parameters' });
   }
-})
+});
 
 const PORT = 3003;
 
 app.listen(PORT, () => {
   console.log('server running on port:', PORT);
-})
+});
