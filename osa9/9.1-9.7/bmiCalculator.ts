@@ -14,4 +14,8 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 }
 
-console.log(calculateBmi(180, 85))
+if(!Number(process.argv[2])|| !Number(process.argv[3])) {
+  throw new Error('Parameters have to be numbers')
+}
+
+console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])))
