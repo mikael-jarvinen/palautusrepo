@@ -1,4 +1,8 @@
 const calculateBmi = (height: number, weight: number): string => {
+  if (!Number(height) ||!Number(weight)) {
+    throw new Error('Parameters have to be numbers')
+  }
+
   const squaredHeight = Math.pow((height / 100), 2);
   const bmi = weight / squaredHeight;
 
@@ -14,8 +18,4 @@ const calculateBmi = (height: number, weight: number): string => {
   }
 }
 
-if(!Number(process.argv[2])|| !Number(process.argv[3])) {
-  throw new Error('Parameters have to be numbers')
-}
-
-console.log(calculateBmi(Number(process.argv[2]), Number(process.argv[3])))
+export default calculateBmi
