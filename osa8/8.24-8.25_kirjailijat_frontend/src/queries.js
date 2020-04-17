@@ -85,6 +85,7 @@ export const BOOK_ADDED = gql`
         name
         born
         bookCount
+        id
       }
       genres
     }

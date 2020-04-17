@@ -1,8 +1,9 @@
+/* eslint-disable linebreak-style */
 /* eslint-disable react/prop-types */
 /* eslint-disable linebreak-style */
 import React, { useState } from 'react'
-import { useMutation, useSubscription } from '@apollo/client'
-import { CREATE_BOOK, ALL_BOOKS, BOOK_ADDED } from '../queries'
+import { useMutation } from '@apollo/client'
+import { CREATE_BOOK } from '../queries'
 
 const NewBook = (props) => {
   const [title, setTitle] = useState('')
@@ -10,26 +11,7 @@ const NewBook = (props) => {
   const [published, setPublished] = useState('')
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
-  const [createBook, result] = useMutation(CREATE_BOOK, {
-    update: (store, response) => {
-      const dataInStore = store.readQuery({ query: ALL_BOOKS })
-      store.writeQuery({
-        query: ALL_BOOKS,
-        data: {
-          ...dataInStore,
-          allBooks: dataInStore.allBooks.concat(response.data.addBook)
-        }
-      })
-    }
-  })
-
-  useSubscription(BOOK_ADDED, {
-    onSubscriptionData: ({ subscriptionData }) => {
-      const newData = subscriptionData.data.bookAdded.title
-      console.log(subscriptionData.data)
-      window.alert(`new book "${newData}" added`)
-    }
-  })
+  const [createBook] = useMutation(CREATE_BOOK)
 
   if (!props.show) {
     return null
