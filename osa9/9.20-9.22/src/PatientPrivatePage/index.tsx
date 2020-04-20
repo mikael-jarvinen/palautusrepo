@@ -11,7 +11,7 @@ const PatientPrivatePage = () => {
   if (!id) {
     throw new Error('incorrect id');
   }
-  const [{ patients }, dispatch] = useStateValue();
+  const [{ patients, diagnoses }, dispatch] = useStateValue();
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -49,7 +49,9 @@ const PatientPrivatePage = () => {
             <div key={entry.id}>
               {entry.date} {entry.description}
               <ul>
-                {entry.diagnosisCodes?.map(code => <li key={code}>{code}</li>)}
+                {entry.diagnosisCodes?.map(code => 
+                <li key={code}>{code} {diagnoses.find(diagnose => 
+                diagnose.code === code)?.name}</li>)}
               </ul>
             </div>
           );
