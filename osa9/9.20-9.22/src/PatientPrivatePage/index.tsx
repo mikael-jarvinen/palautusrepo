@@ -5,13 +5,14 @@ import axios from 'axios';
 import { PatientPrivate } from '../types';
 import { apiBaseUrl } from '../constants';
 import { Header, Icon } from 'semantic-ui-react';
+import EntryDetails from '../components/EntryDetails';
 
 const PatientPrivatePage = () => {
   const { id } = useParams();
   if (!id) {
     throw new Error('incorrect id');
   }
-  const [{ patients, diagnoses }, dispatch] = useStateValue();
+  const [{ patients }, dispatch] = useStateValue();
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -43,20 +44,7 @@ const PatientPrivatePage = () => {
       <Header as='h4'>ssn: {viewedPatient.ssn}</Header>
       <Header as='h4'>occupation: {viewedPatient.occupation}</Header>
       <Header as='h3'>entries</Header>
-      <Header as='h4'>
-        {viewedPatient.entries.map(entry => {
-          return (
-            <div key={entry.id}>
-              {entry.date} {entry.description}
-              <ul>
-                {entry.diagnosisCodes?.map(code => 
-                <li key={code}>{code} {diagnoses.find(diagnose => 
-                diagnose.code === code)?.name}</li>)}
-              </ul>
-            </div>
-          );
-        })}
-      </Header>
+      {viewedPatient.entries.map(entry => <EntryDetails key={entry.id} entry={entry}/>)}
     </div>
   );
 };
