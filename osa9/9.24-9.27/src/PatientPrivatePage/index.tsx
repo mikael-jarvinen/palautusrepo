@@ -42,6 +42,7 @@ const PatientPrivatePage = () => {
       setModalOpen(false);
     } catch (e) {
       console.error(e.response.data);
+      window.alert(e.response.body.error);
     }
   };
 
