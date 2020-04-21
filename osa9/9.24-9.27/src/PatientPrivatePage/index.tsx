@@ -6,8 +6,10 @@ import { PatientPrivate } from '../types';
 import { apiBaseUrl } from '../constants';
 import { Header, Icon, Button } from 'semantic-ui-react';
 import EntryDetails from '../components/EntryDetails';
-import AddEntryModal from '../AddEntryModal';
-import { EntryFormValues } from '../AddEntryModal/AddEntryForm';
+import AddCheckEntryModal from '../AddCheckEntryModal';
+import AddHospitalEntryModal from '../AddHospitalEntry';
+import { CheckEntryFormValues } from '../AddCheckEntryModal/AddEntryForm';
+import { HospitalEntryFormValues } from "../AddHospitalEntry/AddEntryForm";
 
 const PatientPrivatePage = () => {
   const { id } = useParams();
@@ -15,7 +17,8 @@ const PatientPrivatePage = () => {
     throw new Error('incorrect id');
   }
   const [{ patients }, dispatch] = useStateValue();
-  const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [modalHealthcheckOpen, setCheckModalOpen] = useState<boolean>(false);
+  const [modalHospitalOpen, setHospitalModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchPatient = async () => {
@@ -29,7 +32,7 @@ const PatientPrivatePage = () => {
     fetchPatient();
   }, [dispatch]);
 
-  const submitEntry = async (values: EntryFormValues) => {
+  const submitCheckEntry = async (values: CheckEntryFormValues) => {
     try {
       const newValues = {
         ...values,
@@ -39,7 +42,27 @@ const PatientPrivatePage = () => {
         `${apiBaseUrl}/patients/${id}/entries`, newValues
       );
       dispatch(createAddPatientPrivate(editedPatient));
-      setModalOpen(false);
+      setCheckModalOpen(false);
+    } catch (e) {
+      console.error(e.response.data);
+      window.alert(e.response.body.error);
+    }
+  };
+
+  const submitHospitalEntry = async (values: HospitalEntryFormValues) => {
+    try {
+      const newValues = {
+        ...values,
+        discharge: {
+          date: values.dischargeDate,
+          criteria: values.dischargeCriteria
+        }
+      };
+      const { data: editedPatient } = await axios.post(
+        `${apiBaseUrl}/patients/${id}/entries`, newValues
+      );
+      dispatch(createAddPatientPrivate(editedPatient));
+      setHospitalModalOpen(false);
     } catch (e) {
       console.error(e.response.data);
       window.alert(e.response.body.error);
@@ -63,12 +86,18 @@ const PatientPrivatePage = () => {
       <Header as='h1'>{viewedPatient.name} <Icon className={gender} /></Header>
       <Header as='h4'>ssn: {viewedPatient.ssn}</Header>
       <Header as='h4'>occupation: {viewedPatient.occupation}</Header>
-      <AddEntryModal 
-        modalOpen={modalOpen} 
-        onClose={() => setModalOpen(false)}
-        onSubmit={submitEntry}
+      <AddCheckEntryModal 
+        modalOpen={modalHealthcheckOpen} 
+        onClose={() => setCheckModalOpen(false)}
+        onSubmit={submitCheckEntry}
       />
-      <Button onClick={() => setModalOpen(true)}>add entry</Button>
+      <AddHospitalEntryModal
+        modalOpen={modalHospitalOpen}
+        onClose={() => setHospitalModalOpen(false)}
+        onSubmit={submitHospitalEntry}
+      />
+      <Button onClick={() => setCheckModalOpen(true)}>add Healthcheck entry</Button>
+      <Button onClick={() => setHospitalModalOpen(true)}>add Hospital entry</Button>
       <Header as='h3'>entries</Header>
       {viewedPatient.entries.map(entry => <EntryDetails key={entry.id} entry={entry}/>)}
     </div>

@@ -7,10 +7,10 @@ import {  HealthCheckEntry, HealthCheckRating } from "../types";
 import { useStateValue } from '../state/state';
 import { DiagnosisSelection, SelectField } from "./FormField";
 
-export type EntryFormValues = Omit<HealthCheckEntry, "id" | "entries">;
+export type CheckEntryFormValues = Omit<HealthCheckEntry, "id" | "entries">;
 
 interface Props {
-  onSubmit: (values: EntryFormValues) => void;
+  onSubmit: (values: CheckEntryFormValues) => void;
   onCancel: () => void;
 }
 
